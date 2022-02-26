@@ -1,0 +1,86 @@
+CREATE TABLE "Fact_Sales" (
+	"FactSalesId"	INTEGER NOT NULL,
+	"AlbumId"	INTEGER NOT NULL,
+	"ArtistId"	INTEGER NOT NULL,
+	"TrackId"	INTEGER NOT NULL,
+	"CustomerId" INTEGER NOT NULL,
+	"TimeId"	INTEGER NOT NULL,
+	"LocationId" INTEGER NOT NULL,
+	"Total"	NUMERIC(10, 2) NOT NULL,
+	FOREIGN KEY("TrackId") REFERENCES "dim_track"("TrackId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY("AlbumId") REFERENCES "dim_album"("AlbumId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY("ArtistId") REFERENCES "dim_artist"("ArtistId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY("CustomerId") REFERENCES "dim_customer"("CustomerId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY("TimeId") REFERENCES "dim_time"("TimeId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY("LocationId") REFERENCES "dim_location"("LocationId") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	PRIMARY KEY("FactSalesId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_album" (
+	"AlbumId"	INTEGER NOT NULL,
+	"Title"	NVARCHAR(160) NOT NULL,
+	PRIMARY KEY("AlbumId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_artist" (
+	"ArtistId"	INTEGER NOT NULL,
+	"Name"	NVARCHAR(120),
+	PRIMARY KEY("ArtistId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_customer" (
+	"CustomerId"	INTEGER NOT NULL,
+	"FirstName"	NVARCHAR(40) NOT NULL,
+	"LastName"	NVARCHAR(20) NOT NULL,
+	"Company"	NVARCHAR(80),
+	"Address"	NVARCHAR(70),
+	"City"	NVARCHAR(40),
+	"State"	NVARCHAR(40),
+	"Country"	NVARCHAR(40),
+	"PostalCode"	NVARCHAR(10),
+	"Phone"	NVARCHAR(24),
+	"Fax"	NVARCHAR(24),
+	"Email"	NVARCHAR(60) NOT NULL,
+	PRIMARY KEY("CustomerId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_location" (
+	"LocationId"	INTEGER NOT NULL,
+	"BillingAddress"	NVARCHAR(70),
+	"BillingCity"	NVARCHAR(40),
+	"BillingCountry"	NVARCHAR(40),
+	PRIMARY KEY("LocationId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_track" (
+	"TrackId"	INTEGER NOT NULL,
+	"Name"	NVARCHAR(200) NOT NULL,
+	"MediaType"	NVARCHAR(200) NOT NULL,
+	"Genre"	NVARCHAR(200) NOT NULL,
+	"Composer"	NVARCHAR(220),
+	"Milliseconds"	INTEGER NOT NULL,
+	"Bytes"	INTEGER,
+	"UnitPrice"	NUMERIC(10, 2) NOT NULL,
+	PRIMARY KEY("TrackId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_invoice" (
+	"InvoiceId"	INTEGER NOT NULL,
+	"UnitPrice"	NUMERIC(10, 2) NOT NULL,
+	"Quantity"	INTEGER NOT NULL,
+	PRIMARY KEY("InvoiceId" AUTOINCREMENT)
+);
+
+CREATE TABLE "dim_time" (
+	"TimeId" INTEGER NOT NULL,
+	"date" DATE NOT NULL,
+	"year" INTEGER NOT NULL,
+	"month" INTEGER NOT NULL,
+	"month_name" NVARCHAR(200) NOT NULL,
+	"day" INTEGER NOT NULL,
+	"day_name" NVARCHAR(200) NOT NULL,
+	"day_week" INTEGER NOT NULL,
+	"week" INTEGER NOT NULL,
+	"quarter" INTEGER NOT NULL,
+	PRIMARY KEY("TimeId" AUTOINCREMENT)
+);
